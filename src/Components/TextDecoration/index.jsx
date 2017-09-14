@@ -7,25 +7,25 @@ import styles from './text.scss';
 class TextDecoration extends Component {
   constructor(props) {
     super(props);
-    this.text = props.content;
   }
 
   state = {
     typeOfNode: '',
     hovered: 0,
-  }
+  };
 
   mouseEnterHandler = () => {
     this.setState({
       typeOfNode: 'enter',
       hovered: this.state.hovered < 10 ? this.state.hovered + 1 : 0,
     });
-  }
+  };
+
   mouseLeaveHandler = () => {
     this.setState({
-      typeOfNode: 'u',
+      typeOfNode: 'leave',
     });
-  }
+  };
 
   render() {
     return (
@@ -40,7 +40,7 @@ class TextDecoration extends Component {
           this.state.hovered > 0 &&
           <span styleName='counter'>
             <br />
-            <u>hoveri: {this.state.hovered}</u>
+            <u>hovered {this.state.hovered} times</u>
           </span>
         }
       </i>
@@ -56,4 +56,4 @@ TextDecoration.defaultProps = {
   content: '',
 };
 
-export default TextDecoration;
+// export default TextDecoration;

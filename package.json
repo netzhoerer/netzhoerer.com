@@ -48,6 +48,8 @@
     "react-a11y": "^0.3.4",
     "react-css-modules": "^4.7.1",
     "react-hot-loader": "^3.0.0-beta.7",
+    "resolve-url": "^0.2.1",
+    "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "stylelint": "^8.1.1",

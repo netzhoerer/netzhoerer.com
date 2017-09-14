@@ -1,7 +1,7 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-import TextDecoration from 'TextDecoration';
-import { Output, Input, CaseChanger } from 'Output';
+import TextDecoration from 'Components/TextDecoration';
+import { Output, Input, CaseChanger } from 'Tools/Output';
 import styles from './app.scss';
 
 

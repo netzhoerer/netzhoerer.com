@@ -21,8 +21,7 @@ module.exports = {
   },
   resolve: {
     modules: [
-      './src/Components',
-      './src/Tools',
+      './src',
       'node_modules',
     ],
     extensions: ['.js', '.jsx', '.json', '.css', '.scss', '.png', '.jpg', '.jpeg', '.gif'],
@@ -54,18 +53,26 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               sourceMap: true,
-              // syntax: 'sass',
-              // parser: syntax,
-              // syntax: syntax,
               config: {
                 path: './build/postcss.config.js',
               },
             },
           },
           {
+            loader: 'resolve-url-loader',
+            // options: {
+            //   sourceMap: true,
+            //   root: './src/styles',
+            //   //   ['./src/styles'],
+            // },
+          },
+          {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
+              includePaths: [
+                './src/styles',
+              ]
             },
           },
         ],
@@ -109,7 +116,7 @@ module.exports = {
   },
   plugins: [
     new StyleLintPlugin({
-      syntax: 'scss'
+      syntax: 'scss',
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
