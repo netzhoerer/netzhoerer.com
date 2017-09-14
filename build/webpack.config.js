@@ -8,31 +8,62 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: [
+  'react-hot-loader/patch', // activate HMR for React
+   'webpack-dev-server/client?http://localhost:3000',// bundle the client for webpack-dev-server and connect to the provided endpoint
+   'webpack/hot/only-dev-server', // bundle the client for hot reloading, only- means to only hot reload for successful updates
+   './src/index.js',
+ ],
   output: {
     path: path.resolve('dist'),
     filename: 'index.js',
   },
   resolve: {
     modules: [
-      path.join(__dirname, 'src'),
+      './src/Components',
+      './src/Tools',
       'node_modules',
     ],
     extensions: ['.js', '.jsx', '.json', '.css', '.scss', '.png', '.jpg', '.jpeg', '.gif'],
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
+        test: /(\.jsx|\.js)$/,
         exclude: /node_modules/,
-        loaders: ['react-hot-loader', /* 'eslint-loader', */'babel-loader'],
-        // 'react-hot-loader!babel-loader'
+        loaders: [
+          'react-hot-loader/webpack',
+          'babel-loader'
+        ],
       },
       {
-        test: /\.js$/,
+        test: /(\.jsx|\.js)$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader'],
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              modules: true
+            }
+         },
+        ],
       },
+
+
+      // {
+      //   test: /\.js?$/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     { loader: 'react-hot-loader' },
+      //     { loader: 'babel-loader' },
+      //     {
+      //       loader: 'eslint-loader',
+      //       options: {
+      //         modules: true
+      //       }
+      //    },
+      //   ],
+      // },
     ],
   },
   plugins: [
@@ -40,9 +71,15 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
       inject: 'body',
+      title: 'netzhoerer - Frontend Developer',
+      hash: true,
+      language: 'de',
+      author: 'Torsten Mirow',
+      twitter: '@netzhoerer'
     }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(), // enable HMR globally
+    new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
+
     // new webpack.optimize.UglifyJsPlugin({
     //  compress: {
     //    warnings: false,
@@ -51,5 +88,13 @@ module.exports = {
   ],
   devServer: {
     contentBase: './dist',
+    publicPath: '/',
+    hot: true,
+    host: 'localhost',
+    port: 3000,
+    // quiet: true,
+    noInfo: true
   },
+  devtool: 'cheap-module-eval-source-map',
+
 };

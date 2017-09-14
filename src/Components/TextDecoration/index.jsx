@@ -21,7 +21,7 @@ class TextDecoration extends Component {
   }
   mouseLeaveHandler = () => {
     this.setState({
-      typeOfNode: 'i',
+      typeOfNode: 'u',
     });
   }
 
@@ -31,14 +31,14 @@ class TextDecoration extends Component {
         onMouseEnter={this.mouseEnterHandler}
         onMouseLeave={this.mouseLeaveHandler}
       >
-        {this.text}
+        {this.props.content}
         <br />
         <b>{this.state.typeOfNode}</b>
         {
           this.state.hovered > 0 &&
           <span>
             <br />
-            <u>hovered: {this.state.hovered}</u>
+            <u>hoverg: {this.state.hovered}</u>
           </span>
         }
       </i>
