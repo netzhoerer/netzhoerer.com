@@ -1,16 +1,16 @@
-/*
-    ./webpack.config.js
-*/
-
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
+const isDev = process.env.NODE_ENV === 'development';
+
 
 module.exports = {
+  cache: true,
+  devtool: isDev ? 'eval-source-map' : 'source-map',
   entry: [
-    'react-hot-loader/patch', // activate HMR for React
+    // 'react-hot-loader/patch', // activate HMR for React // only patch or the rest
     'webpack-dev-server/client?http://localhost:3000',// bundle the client for webpack-dev-server and connect to the provided endpoint
     'webpack/hot/only-dev-server', // bundle the client for hot reloading, only- means to only hot reload for successful updates
     './src/index.js',
@@ -60,11 +60,6 @@ module.exports = {
           },
           {
             loader: 'resolve-url-loader',
-            // options: {
-            //   sourceMap: true,
-            //   root: './src/styles',
-            //   //   ['./src/styles'],
-            // },
           },
           {
             loader: 'sass-loader',
@@ -72,17 +67,10 @@ module.exports = {
               sourceMap: true,
               includePaths: [
                 './src/styles',
-              ]
+              ],
             },
           },
         ],
-        // loaders: [
-        //   'style-loader?sourceMap',
-        //   'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-        //   // 'resolve-url',
-        //   'sass-loader?sourceMap',
-        //   'postcss-loader'
-        // ]
       },
       {
         test: /(\.jsx|\.js)$/,
@@ -96,22 +84,6 @@ module.exports = {
           },
         ],
       },
-
-
-      // {
-      //   test: /\.js?$/,
-      //   exclude: /node_modules/,
-      //   use: [
-      //     { loader: 'react-hot-loader' },
-      //     { loader: 'babel-loader' },
-      //     {
-      //       loader: 'eslint-loader',
-      //       options: {
-      //         modules: true
-      //       }
-      //    },
-      //   ],
-      // },
     ],
   },
   plugins: [
@@ -129,7 +101,8 @@ module.exports = {
       twitter: '@netzhoerer',
     }),
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally
-    new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
+    new webpack.NamedModulesPlugin(),
+    // prints more readable module names in the browser console on HMR updates
 
     // new webpack.optimize.UglifyJsPlugin({
     //  compress: {
@@ -145,7 +118,7 @@ module.exports = {
     port: 3000,
     // quiet: true,
     noInfo: true,
+    overlay: true,
   },
-  devtool: 'cheap-module-eval-source-map',
 
 };

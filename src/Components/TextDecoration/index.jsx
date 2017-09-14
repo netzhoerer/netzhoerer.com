@@ -7,12 +7,11 @@ import styles from './text.scss';
 class TextDecoration extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      typeOfNode: '',
+      hovered: 0,
+    };
   }
-
-  state = {
-    typeOfNode: '',
-    hovered: 0,
-  };
 
   mouseEnterHandler = () => {
     this.setState({
@@ -56,4 +55,4 @@ TextDecoration.defaultProps = {
   content: '',
 };
 
-// export default TextDecoration;
+export default TextDecoration;

@@ -1,6 +1,7 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import TextDecoration from 'Components/TextDecoration';
+import Pass from 'Components/Pass';
 import { Output, Input, CaseChanger } from 'Tools/Output';
 import styles from './app.scss';
 
@@ -12,6 +13,7 @@ const App = () => (
       <TextDecoration
         content='die ist der eis baum'
       />
+      <Pass content='content' pass='pass ->' />
     </p>
     <div>{Output()}</div>
     <div>{Input('Loremo')}</div>
