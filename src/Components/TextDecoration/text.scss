@@ -1,0 +1,11 @@
+.blub {
+	color: forestgreen;
+}
+.counter {
+	composes: blub;
+
+	background-color: orange;
+	padding: 3px 5px;
+	text-align: center;
+	display: block;
+}

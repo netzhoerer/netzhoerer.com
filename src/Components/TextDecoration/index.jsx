@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
+import styles from './text.scss';
 
-
+@CSSModules(styles)
 class TextDecoration extends Component {
   constructor(props) {
     super(props);
@@ -33,12 +35,12 @@ class TextDecoration extends Component {
       >
         {this.props.content}
         <br />
-        <b>{this.state.typeOfNode}</b>
+        <b styleName='blub'>{this.state.typeOfNode}</b>
         {
           this.state.hovered > 0 &&
-          <span>
+          <span styleName='counter'>
             <br />
-            <u>hoverg: {this.state.hovered}</u>
+            <u>hoveri: {this.state.hovered}</u>
           </span>
         }
       </i>
