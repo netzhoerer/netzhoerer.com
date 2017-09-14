@@ -5,10 +5,9 @@ import styles from './text.scss';
 
 @CSSModules(styles)
 class TextDecoration extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+  // constructor(props) {
+  //   super(props);
+  // }
   state = {
     typeOfNode: '',
     hovered: 0,
@@ -56,4 +55,4 @@ TextDecoration.defaultProps = {
   content: '',
 };
 
-// export default TextDecoration;
+export default TextDecoration;
