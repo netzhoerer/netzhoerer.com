@@ -5,15 +5,16 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 
 module.exports = {
   entry: [
-  'react-hot-loader/patch', // activate HMR for React
-   'webpack-dev-server/client?http://localhost:3000',// bundle the client for webpack-dev-server and connect to the provided endpoint
-   'webpack/hot/only-dev-server', // bundle the client for hot reloading, only- means to only hot reload for successful updates
-   './src/index.js',
- ],
+    'react-hot-loader/patch', // activate HMR for React
+    'webpack-dev-server/client?http://localhost:3000',// bundle the client for webpack-dev-server and connect to the provided endpoint
+    'webpack/hot/only-dev-server', // bundle the client for hot reloading, only- means to only hot reload for successful updates
+    './src/index.js',
+  ],
   output: {
     path: path.resolve('dist'),
     filename: 'index.js',
@@ -33,17 +34,48 @@ module.exports = {
         exclude: /node_modules/,
         loaders: [
           'react-hot-loader/webpack',
-          'babel-loader'
+          'babel-loader',
         ],
       },
       {
         test: /\.scss$/,
-        loaders: [
-          'style-loader?sourceMap',
-          'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-          // 'resolve-url',
-          'sass-loader?sourceMap'
-        ]
+        use: [
+          { loader: 'style-loader', options: { sourceMap: true } },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              // syntax: 'sass',
+              // parser: syntax,
+              // syntax: syntax,
+              config: {
+                path: './build/postcss.config.js',
+              },
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+        // loaders: [
+        //   'style-loader?sourceMap',
+        //   'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+        //   // 'resolve-url',
+        //   'sass-loader?sourceMap',
+        //   'postcss-loader'
+        // ]
       },
       {
         test: /(\.jsx|\.js)$/,
@@ -52,9 +84,9 @@ module.exports = {
           {
             loader: 'eslint-loader',
             options: {
-              modules: true
-            }
-         },
+              modules: true,
+            },
+          },
         ],
       },
 
@@ -76,6 +108,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new StyleLintPlugin({
+      syntax: 'scss'
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
@@ -84,7 +119,7 @@ module.exports = {
       hash: true,
       language: 'de',
       author: 'Torsten Mirow',
-      twitter: '@netzhoerer'
+      twitter: '@netzhoerer',
     }),
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally
     new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
@@ -102,7 +137,7 @@ module.exports = {
     host: 'localhost',
     port: 3000,
     // quiet: true,
-    noInfo: true
+    noInfo: true,
   },
   devtool: 'cheap-module-eval-source-map',
 
