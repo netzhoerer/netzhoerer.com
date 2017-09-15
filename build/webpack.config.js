@@ -10,7 +10,7 @@ module.exports = {
   cache: true,
   devtool: isDev ? 'eval-source-map' : 'source-map',
   entry: [
-    // 'react-hot-loader/patch', // activate HMR for React // only patch or the rest
+    'react-hot-loader/patch', // activate HMR for React // only patch or the rest
     'webpack-dev-server/client?http://localhost:3000',// bundle the client for webpack-dev-server and connect to the provided endpoint
     'webpack/hot/only-dev-server', // bundle the client for hot reloading, only- means to only hot reload for successful updates
     './src/index.js',
