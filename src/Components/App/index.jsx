@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import CSSModules from 'react-css-modules';
+import { createStructuredSelector } from 'reselect';
+
 // import TextDecoration from 'Components/TextDecoration';
 // import Pass from 'Components/Pass';
 // import { Output, Input, CaseChanger } from 'Tools/Output';
 
+import { getLoading } from './appSelecter';
 import * as AppActions from './AppActions';
 import styles from './app.scss';
-
 
 // const App = () => (
 //   <div style={{ textAlign: 'center' }}>
@@ -46,7 +49,7 @@ import styles from './app.scss';
 // App.defaultProps = {
 //   app: false,
 // };
-
+/* eslint-disable */
 export class App extends Component {
   constructor(props) {
     super(props);
@@ -67,25 +70,32 @@ export class App extends Component {
       <div style={{ textAlign: 'center' }}>
         <h1 styleName='blue'>whoop {this.state.Lorem}</h1>
         <div className='description'>
-          {JSON.stringify(this.props.app.loading)}
+          {JSON.stringify(this.props.loading)}
           <br />
-          { this.props.app.data }
+          {this.props.loadingStatus.toString()}
         </div>
         <button onClick={this.clickHandler}>click</button>
+        <Link to='/text'>to text</Link>
       </div>);
   }
 }
 
 App.propTypes = {
   getData: PropTypes.func.isRequired,
-  app: PropTypes.shape({
-    loading: PropTypes.bool,
-    data: PropTypes.string.isRequired,
-  }).isRequired,
+  loading: PropTypes.bool.isRequired,
+  data: PropTypes.string.isRequired,
 };
 
-
-const mapStateToProps = state => ({ ...state });
+/* eslint-disable */
+const mapStateToProps = createStructuredSelector({
+  loadingStatus: getLoading(),
+});
+// const mapStateToProps = state => {
+//   return {
+//     loadingStatus: getLoading(state),
+//   }
+// };
+// { ...state }
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({

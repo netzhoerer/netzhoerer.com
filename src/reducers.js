@@ -1,4 +1,5 @@
 import appReducer from 'Components/App/AppReducers';
+import TextReducer from 'Components/Text/TextReducers';
 // import {
 //   categoriesReducer,
 //   categoryReducer,
@@ -15,5 +16,6 @@ import appReducer from 'Components/App/AppReducers';
 export default () => (
   (state = {}, action) => ({
     app: appReducer(state.app, action),
+    text: TextReducer(state.text, action),
   })
 );

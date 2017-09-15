@@ -28,28 +28,48 @@
 
 /*eslint spaced-comment: ["error", "never"]*/
 import React from 'react';
+import Immutable from 'immutable';
 import { render } from 'react-dom';
-import { Router, Route, Redirect } from 'react-router';
-import { BrowserRouter } from 'react-router-dom'
-
+import { useRouterHistory } from 'react-router';
+import {
+  // BrowserRouter as Router,
+  HashRouter as Router,
+  Route,
+  Link,
+} from 'react-router-dom';
 import { AppContainer } from 'react-hot-loader'
+import { fromJS } from 'immutable';
+
 
 import { Provider } from 'react-redux';
 import configureStore from './store' ;
 
 import App from 'Components/App';
+import Text from 'Components/Text';
 
 
-const initialState = {
-  app: {
+const initialState = fromJS({
+  app: fromJS({
     loading: false,
-  },
-};
+  }),
+});
+// const initialState = {
+//   app: {
+//     loading: false,
+//   },
+// };
 
 
 const store = configureStore(initialState);
 
+console.log(store, 'store');
+
 // import createBrowserHistory from 'history/lib/createBrowserHistory';
+// const history = useRouterHistory(createBrowserHistory)({
+//   basename: /*rdph:std_base_path*/'/'/**/,
+//   // basename: /*rdph:std_base_path*/'/previews/postbank/infothek/'/**/,
+// });
+
 // const history = useRouterHistory(createBrowserHistory)({
 //   basename: /*rdph:std_base_path*/'/'/**/,
 //   // basename: /*rdph:std_base_path*/'/previews/postbank/infothek/'/**/,
@@ -62,14 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
     <AppContainer>
       <Provider store={store}>
         {/*<Router history={history}>*/}
-        <BrowserRouter
+        <Router
           //basename={'basename'}
           //forceRefresh={optionalBool}
           //getUserConfirmation={optionalFunc}
           //keyLength={optionalNumber}
+          // history={history}
         >
-          <App />
-        </BrowserRouter>
+          <div>
+            <Route exact path='/' component={App} />
+            <Route path='/text' component={Text} />
+          </div>
+        </Router>
       </Provider>
     </AppContainer>,
     document.getElementById('app'),
@@ -79,18 +103,23 @@ document.addEventListener('DOMContentLoaded', () => {
   if (module.hot) {
     module.hot.accept('./Components/App', () => {
       const NextApp = require('Components/App').default;
+      const NextText = require('Components/Text').default;
       render(
         <AppContainer>
           <Provider store={store}>
             {/*<Router history={history}>*/}
-            <BrowserRouter
+            <Router
               //basename={'basename'}
               //forceRefresh={optionalBool}
               //getUserConfirmation={optionalFunc}
               //keyLength={optionalNumber}
             >
-              <NextApp />
-            </BrowserRouter>
+              {/*<NextApp />*/}
+              <div>
+                <Route exact path='/' component={NextApp} />
+                <Route path='/text' component={NextText} />
+              </div>
+            </Router>
           </Provider>
         </AppContainer>,
         document.getElementById('app'),

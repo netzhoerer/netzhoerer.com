@@ -1,0 +1,8 @@
+.box {
+  color: green;
+}
+
+.blue {
+  composes: box;
+  color: blue;
+}
