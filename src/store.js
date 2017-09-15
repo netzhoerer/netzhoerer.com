@@ -3,6 +3,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 // import fetchDataMiddleware from './fetchDataMiddleware';
 // import trackingMiddleware from './trackingMiddleware';
 // import searchMiddleware from './searchMiddleware';
+import testMiddleware from './Tools/middleware/testMiddleware';
 import createReducers from './reducers';
 
 /* eslint-disable-next-line */
@@ -15,6 +16,7 @@ const configureStore = (initialState) => {
       // fetchDataMiddleware,
       // trackingMiddleware,
       // searchMiddleware,
+      testMiddleware,
     ),
     devtools(),
   ];

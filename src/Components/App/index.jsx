@@ -68,6 +68,8 @@ export class App extends Component {
         <h1 styleName='blue'>whoop {this.state.Lorem}</h1>
         <div className='description'>
           {JSON.stringify(this.props.app.loading)}
+          <br />
+          { this.props.app.data }
         </div>
         <button onClick={this.clickHandler}>click</button>
       </div>);
@@ -78,6 +80,7 @@ App.propTypes = {
   getData: PropTypes.func.isRequired,
   app: PropTypes.shape({
     loading: PropTypes.bool,
+    data: PropTypes.string.isRequired,
   }).isRequired,
 };
 
