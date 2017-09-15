@@ -1,17 +1,16 @@
-/*
-    ./webpack.config.js
-*/
-
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const isDev = process.env.NODE_ENV === 'development';
+
 
 module.exports = {
+  cache: true,
+  devtool: isDev ? 'eval-source-map' : 'source-map',
   entry: [
-    'react-hot-loader/patch', // activate HMR for React
+    // 'react-hot-loader/patch', // activate HMR for React // only patch or the rest
     'webpack-dev-server/client?http://localhost:3000',// bundle the client for webpack-dev-server and connect to the provided endpoint
     'webpack/hot/only-dev-server', // bundle the client for hot reloading, only- means to only hot reload for successful updates
     './src/index.js',
@@ -61,11 +60,6 @@ module.exports = {
           },
           {
             loader: 'resolve-url-loader',
-            // options: {
-            //   sourceMap: true,
-            //   root: './src/styles',
-            //   //   ['./src/styles'],
-            // },
           },
           {
             loader: 'sass-loader',
@@ -107,26 +101,8 @@ module.exports = {
       twitter: '@netzhoerer',
     }),
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally
-    new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
-    // new webpack.optimize.CommonsChunkPlugin(),
-    // new ExtractTextPlugin(),
-    new FriendlyErrorsPlugin({
-      compilationSuccessInfo: {
-        messages: ['You application is running here http://localhost:3000'],
-        notes: ['Some additionnal notes to be displayed unpon successful compilation'],
-      },
-      onErrors: function (severity, errors) {
-        // You can listen to errors transformed and prioritized by the plugin
-        // severity can be 'error' or 'warning'
-      },
-      // should the console be cleared between each compilation?
-      // default is true
-      clearConsole: true,
-
-      // add formatters and transformers (see below)
-      additionalFormatters: [],
-      additionalTransformers: [],
-    }),
+    new webpack.NamedModulesPlugin(),
+    // prints more readable module names in the browser console on HMR updates
 
     // new webpack.optimize.UglifyJsPlugin({
     //  compress: {
@@ -140,12 +116,9 @@ module.exports = {
     hot: true,
     host: 'localhost',
     port: 3000,
-    quiet: true,
+    // quiet: true,
     noInfo: true,
     overlay: true,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    stats: { colors: true },
   },
-  devtool: 'source-map',
 
 };
